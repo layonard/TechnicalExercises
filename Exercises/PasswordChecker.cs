@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Exercises
 {
@@ -46,6 +42,11 @@ namespace Exercises
         private List<string> _passwords;
         public PasswordChecker()
         {
+            FillPasswordsWithSampleData();
+        }
+
+        private void FillPasswordsWithSampleData()
+        {
             _passwords = new List<string>
             {
                 { "Strongpwd9999#abc" },
@@ -71,15 +72,15 @@ namespace Exercises
         private void Validate(string password)
         {
             var result = "[";
-            var results = new List<string>
+            var results = new string[]
             {
-                { Rule1(password) },
-                { Rule2(password) },
-                { Rule3(password) },
-                { Rule4(password) },
-                { Rule5(password) }
+                Rule1(password),
+                Rule2(password),
+                Rule3(password),
+                Rule4(password),
+                Rule5(password)
             };
-            result += string.Join(",", results.Where(p => !String.IsNullOrEmpty(p)).ToArray());
+            result += string.Join(",", results.Where(p => !String.IsNullOrEmpty(p)));
             result += "]";
             Console.WriteLine(result);
         }
@@ -100,21 +101,19 @@ namespace Exercises
             {
                 if (!char.IsLetter(character))
                     continue;
-                if (checker.ContainsKey(character))
+                if (!checker.TryAdd(character, 1))
                 {
                     checker[character]++;
                     if (checker[character] == 4)
                         return "3";
                 }
-                else
-                    checker.Add(character, 1);
             }
             return "";
         }
 
         private string Rule4(string password)
         {
-            var pattern = @"(([A-Z])+[a-z]+)|([a-z]+[A-Z])+";
+            var pattern = @"(([A-Z])+[a-z]+)|([a-z]+[A-Z]+)";
             Regex rg = new Regex(pattern);
             return rg.Matches(password).Count < 1 ? "4" : "";
         }
