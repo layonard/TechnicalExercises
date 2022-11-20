@@ -98,6 +98,8 @@ namespace Exercises
             var checker = new Dictionary<char, int>();
             foreach (var character in password)
             {
+                if (!char.IsLetter(character))
+                    continue;
                 if (checker.ContainsKey(character))
                 {
                     checker[character]++;
