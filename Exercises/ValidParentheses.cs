@@ -31,7 +31,12 @@ Example 5:
  */
 public class ValidParentheses
 {
-    public bool IsValid(string s)
+    public string Solution(string input)
+    {
+        return IsValid(input) ? "valid" : "invalid";
+    }
+
+    private bool IsValid(string s)
     {
         return true;
     }
