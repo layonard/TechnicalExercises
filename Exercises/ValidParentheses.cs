@@ -31,6 +31,17 @@ Example 5:
  */
 public class ValidParentheses
 {
+    private readonly Dictionary<char, char> _openCloseRelation;
+
+    public ValidParentheses()
+    {
+        _openCloseRelation= new Dictionary<char, char>
+        {
+            { '(', ')' },
+            { '[', ']' },
+            { '{', '}' }
+        };
+    }
     public string Solution(string input)
     {
         return IsValid(input) ? "valid" : "invalid";
@@ -38,6 +49,38 @@ public class ValidParentheses
 
     private bool IsValid(string s)
     {
-        return true;
+        var parentheses = new Stack<char>();
+
+        foreach (char c in s)
+        {
+            if (IsStartParentheses(c))
+            {
+                parentheses.Push(c);
+                continue;
+            }
+
+            if (parentheses.IsEmpty())
+                return false;
+
+            var open = parentheses.Pop();
+            if(_openCloseRelation[open] != c) 
+                return false;
+        }
+
+        return parentheses.IsEmpty();
+    }
+
+    private bool IsStartParentheses(char c)
+    {
+        return c == '(' || c == '[' || c == '{';
+    }
+
+}
+
+static class StackExtensions
+{
+    public static bool IsEmpty(this Stack<char> stack)
+    {
+        return stack.Count == 0;
     }
 }
