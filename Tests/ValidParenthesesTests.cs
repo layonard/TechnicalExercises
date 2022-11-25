@@ -18,7 +18,8 @@ public class ValidParenthesesTests
     [TestCase ("(]", "invalid")]
     [TestCase ("([)]", "invalid")]
     [TestCase ("{[]}", "valid")]
-    public void FirstTest(string input, string result)
+    [TestCase ("]}", "invalid")]
+    public void ParenthesesTests(string input, string result)
     {
         Assert.AreEqual(result, _app.Solution(input));
     }
