@@ -10,7 +10,7 @@ public class CustomVersionCheckerTests
     [SetUp]
     public void Setup()
     {
-        var _app = new CustomVersionChecker();
+        _app = new CustomVersionChecker();
     }
 
     [Test]
@@ -22,6 +22,6 @@ public class CustomVersionCheckerTests
     [TestCase ("2.0.1","1.2000.1",1)]
     public void SolutionTest(string version1, string version2, int expectedResult)
     {
-        Assert.Equals(expectedResult, _app.Solution(version1, version2));
+        Assert.AreEqual(expectedResult, _app.Solution(version1, version2));
     }
 }
